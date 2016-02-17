@@ -72,10 +72,11 @@ module.exports = AtomKeyboardMacrosVim =
     editorElement = e.target?.parentNode
     className = editorElement?.className
     if className?.indexOf('vim-hidden-normal-mode-input') >= 0
+      #console.log('found vim-hidden-normal-mode-input', editorElement)
       return if e.ctrlKey or e.altKey or e.metaKey
 
       character = atom.keymaps.keystrokeForKeyboardEvent(e)
-      console.log('keystrokeForKeyboardEvent', character)
+      #console.log('keystrokeForKeyboardEvent', character)
 
       obj = {
         fn: {
@@ -89,9 +90,10 @@ module.exports = AtomKeyboardMacrosVim =
         }
       }
       AtomKeyboardMacros.push_plugin_command obj
-      window.removeEventListener('keydown', @eventListener, true)
+      #window.removeEventListener('keydown', @eventListener, true)
       return
 
+    #console.log('check panels')
     # check bottom panel for find 'vim-normal-mode-input-element'
     panels = atom.workspace.getBottomPanels()
     inputPanel = null
@@ -125,11 +127,11 @@ module.exports = AtomKeyboardMacrosVim =
         }
       }
       AtomKeyboardMacros.push_plugin_command obj
-      window.removeEventListener('keydown', @eventListener, true)
-    else
-      if e.keyCode == 27
+      #window.removeEventListener('keydown', @eventListener, true)
+    #else
+      #if e.keyCode == 27
         #console.log('Escape')
-        window.removeEventListener('keydown', @eventListener, true)
+        #window.removeEventListener('keydown', @eventListener, true)
 
   #
   #
@@ -226,7 +228,7 @@ module.exports = AtomKeyboardMacrosVim =
     AtomKeyboardMacros.start_kbd_macro()
 
   startExecute: (name) ->
-    console.log('macro cmds', AtomKeyboardMacros.macroCommands)
+    #console.log('macro cmds', AtomKeyboardMacros.macroCommands)
     editor = atom.views.getView(atom.workspace.getActiveTextEditor())
     editor.focus()
     AtomKeyboardMacros.execute_named_macro_with_string(name)
