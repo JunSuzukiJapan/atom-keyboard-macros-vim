@@ -7,7 +7,7 @@
   "activationCommands": {
     "atom-workspace": "atom-keyboard-macros-vim:toggle_record_macro_vim"
   },
-  "repository": "https://github.com/atom/atom-keyboard-macros-vim",
+  "repository": "https://github.com/JunSuzukiJapan/atom-keyboard-macros-vim",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
