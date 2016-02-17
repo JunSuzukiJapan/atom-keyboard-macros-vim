@@ -1,0 +1,18 @@
+{
+  "name": "atom-keyboard-macros-vim",
+  "main": "./lib/atom-keyboard-macros-vim",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "keywords": [],
+  "activationCommands": {
+    "atom-workspace": "atom-keyboard-macros-vim:toggle_record_macro_vim"
+  },
+  "repository": "https://github.com/atom/atom-keyboard-macros-vim",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "atom-keyboard-macros": "^0.7.4"
+  }
+}

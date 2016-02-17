@@ -1,0 +1,22 @@
+# See https://atom.io/docs/latest/hacking-atom-package-word-count#menus for more details
+'context-menu':
+  'atom-text-editor': [
+    {
+      'label': 'Toggle macro recording'
+      'command': 'atom-keyboard-macros-vim:toggle_record_macro_vim'
+    }
+  ]
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'atom-keyboard-macros-vim'
+      'submenu': [
+        {
+          'label': 'Toggle macro recording'
+          'command': 'atom-keyboard-macros-vim:toggle_record_macro_vim'
+        }
+      ]
+    ]
+  }
+]
