@@ -72,11 +72,11 @@ module.exports = AtomKeyboardMacrosVim =
     editorElement = e.target?.parentNode
     className = editorElement?.className
     if className?.indexOf('vim-hidden-normal-mode-input') >= 0
-      #console.log('found vim-hidden-normal-mode-input', editorElement)
       return if e.ctrlKey or e.altKey or e.metaKey
 
       character = atom.keymaps.keystrokeForKeyboardEvent(e)
-      #console.log('keystrokeForKeyboardEvent', character)
+      if character.indexOf('shift') == 0
+        return
 
       obj = {
         fn: {
@@ -90,10 +90,8 @@ module.exports = AtomKeyboardMacrosVim =
         }
       }
       AtomKeyboardMacros.push_plugin_command obj
-      #window.removeEventListener('keydown', @eventListener, true)
       return
 
-    #console.log('check panels')
     # check bottom panel for find 'vim-normal-mode-input-element'
     panels = atom.workspace.getBottomPanels()
     inputPanel = null
@@ -121,17 +119,10 @@ module.exports = AtomKeyboardMacrosVim =
           instansiateFromSavedString: @instansiateFromSavedString.bind(this)
         }
         options: {
-          inputs: @key_inputs
           text: text
-          enter: e
         }
       }
       AtomKeyboardMacros.push_plugin_command obj
-      #window.removeEventListener('keydown', @eventListener, true)
-    #else
-      #if e.keyCode == 27
-        #console.log('Escape')
-        #window.removeEventListener('keydown', @eventListener, true)
 
   #
   #
@@ -148,8 +139,7 @@ module.exports = AtomKeyboardMacrosVim =
       return
 
     text = options.text
-    enter = options.enter
-    return unless text and enter
+    return unless text
 
     # search 'normal-mode-input'
     panels = atom.workspace.getBottomPanels()
@@ -162,25 +152,17 @@ module.exports = AtomKeyboardMacrosVim =
     unless inputPanel
       return
 
-    text = options.text
     states = @vim_module.vimStates
     states.forEach (state) ->
       stack = state.opStack
       history = state.history
-      #console.log('history', history)
-      #console.log('normalModeInputView', state.editor?.normalModeInputView?)
       if state.editor?.normalModeInputView?
-        #console.log('stack', stack)
-        #console.log('state:', state)
         # search TextEditor
-        #console.log('inputPanel', inputPanel)
         editorElement = inputPanel.item.editorElement
         editor = editorElement?.getModel?()
-        #console.log('editor', editor)
         return unless editor
         editor.setText text
         inputPanel.show()
-        #console.log('inputPanel', inputPanel)
         try
           inputPanel.item?.confirm?()
         catch error
@@ -188,9 +170,20 @@ module.exports = AtomKeyboardMacrosVim =
 
   toString: (tabs) ->
 
-  toSaveString: ->
+  toSaveString: (options) ->
+    '*P:atom-keyboard-macros-vim:instansiateFromSavedString:' + options.text + "\n"
 
-  instansiateFromSavedString: (str) ->
+  instansiateFromSavedString: (optionsText) ->
+    fns = {
+      execute: @execute.bind(this)
+      toString: @toString.bind(this)
+      toSaveString: @toSaveString.bind(this)
+      instansiateFromSavedString: @instansiateFromSavedString.bind(this)
+    }
+    opts = {
+      text: optionsText
+    }
+    new AtomKeyboardMacros.PluginCommand(fns, opts)
 
   #
   # single character
@@ -202,20 +195,30 @@ module.exports = AtomKeyboardMacrosVim =
     parentNode = view.parentNode
     elements = parentNode.getElementsByClassName('vim-hidden-normal-mode-input')
     return unless elements.length > 0
+
     item = elements[0]
     editorElement = item.editorElement
-    #console.log('editorElement', editorElement)
     return unless editorElement
 
     model = editorElement.getModel?()
-    #console.log('model', model)
     model.setText character
 
   singleToString: (tabs) ->
 
-  singleToSaveString: ->
+  singleToSaveString: (options) ->
+    '*P:atom-keyboard-macros-vim:singleInstansiateFromSavedString:' + options.character + "\n"
 
-  singleInstansiateFromSavedString: (str) ->
+  singleInstansiateFromSavedString: (optionsText) ->
+    fns = {
+      execute: @singleExecute.bind(this)
+      toString: @singleToString.bind(this)
+      toSaveString: @singleToSaveString.bind(this)
+      instansiateFromSavedString: @singleInstansiateFromSavedString.bind(this)
+    }
+    opts = {
+      character: optionsText
+    }
+    new AtomKeyboardMacros.PluginCommand(fns, opts)
 
   #
   #
@@ -229,6 +232,7 @@ module.exports = AtomKeyboardMacrosVim =
 
   startExecute: (name) ->
     #console.log('macro cmds', AtomKeyboardMacros.macroCommands)
+    #console.log('vim_module', @vim_module)
     editor = atom.views.getView(atom.workspace.getActiveTextEditor())
     editor.focus()
     AtomKeyboardMacros.execute_named_macro_with_string(name)

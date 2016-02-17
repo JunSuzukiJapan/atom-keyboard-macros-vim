@@ -1,5 +1,16 @@
 # atom-keyboard-macros-vim package
 
-A short description of your package.
+Keyboard macro extension for Atom vim-mode.
 
-![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+# Shortcuts
+
+```q a-z```  start recording
+
+```q``` stop recording
+
+```@ a-z``` execute macro
+
+# See also
+
+[atom-keyboard-macros](https://atom.io/packages/atom-keyboard-macros)
+>before load macros from file, activate this package(ex: ```q q q```)
