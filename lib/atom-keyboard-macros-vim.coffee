@@ -64,6 +64,8 @@ module.exports = AtomKeyboardMacrosVim =
       when InputMode.Record
         @startRecord(str)
       when InputMode.Execute
+        if str.length == 1
+          str = str.toLowerCase()
         @startExecute(str)
 
   # @eventListener
