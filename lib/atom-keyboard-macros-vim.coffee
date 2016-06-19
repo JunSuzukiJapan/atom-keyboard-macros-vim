@@ -99,7 +99,7 @@ module.exports = AtomKeyboardMacrosVim =
     inputPanel = null
     for panel in panels
       className = panel.className or panel.item.className
-      if className.indexOf('normal-mode-input') == 0
+      if className and className.indexOf('normal-mode-input') == 0
         inputPanel = panel
         break
 
