@@ -11,3 +11,7 @@
 'atom-text-editor.vim-mode:not(.insert-mode)':
   'q': 'atom-keyboard-macros-vim:toggle_record_macro_vim'
   '@': 'atom-keyboard-macros-vim:execute_macro_vim'
+
+'atom-text-editor.vim-mode-plus:not(.insert-mode)':
+  'q': 'atom-keyboard-macros-vim:toggle_record_macro_vim'
+  '@': 'atom-keyboard-macros-vim:execute_macro_vim'
