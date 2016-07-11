@@ -1,7 +1,7 @@
 {
   "name": "atom-keyboard-macros-vim",
   "main": "./lib/atom-keyboard-macros-vim",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A short description of your package",
   "keywords": [],
   "activationCommands": {
