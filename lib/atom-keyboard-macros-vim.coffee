@@ -237,7 +237,10 @@ module.exports = AtomKeyboardMacrosVim =
     #console.log('vim_module', @vim_module)
     editor = atom.views.getView(atom.workspace.getActiveTextEditor())
     editor.focus()
-    AtomKeyboardMacros.execute_named_macro_with_string(name)
+    if name == "@"
+      AtomKeyboardMacros.call_last_kbd_macro()
+    else
+      AtomKeyboardMacros.execute_named_macro_with_string(name)
 
 class Input
   constructor: (@characters) ->
