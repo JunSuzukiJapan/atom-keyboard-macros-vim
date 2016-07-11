@@ -1,6 +1,6 @@
 # atom-keyboard-macros-vim package
 
-Keyboard macro extension for Atom vim-mode.
+Keyboard macro extension for Atom vim-mode and vim-mode-plus.
 
 # Shortcuts
 
