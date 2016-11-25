@@ -6,7 +6,6 @@ class HiddenInputViewModel
     @view = new HiddenInputView().initialize(this, atom.views.getView(@editor))
     @editor.normalModeInputView = @view
     #@controller.onDidFailToCompose => @view.remove()
-    @view.focus()
 
   confirm: (view) ->
     value = @view.value
